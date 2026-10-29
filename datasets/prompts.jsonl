@@ -1,0 +1,25 @@
+{"text": "Summarize the following text in one sentence: The quick brown fox jumps over the lazy dog. The dog, startled, barks loudly and chases the fox into the nearby forest, where the fox quickly disappears among the trees.", "output_length": 4000}
+{"text": "What is the capital of Australia?", "output_length": 4000}
+{"text": "Write a brief, friendly email to a colleague asking them to review a document by Friday.", "output_length": 4000}
+{"text": "Explain what an API is to a non-technical person in two sentences.", "output_length": 4000}
+{"text": "I have 3 days in Tokyo. Suggest a simple itinerary with 2-3 activities per day.", "output_length": 4000}
+{"text": "Give me a simple recipe for pasta aglio e olio for two people.", "output_length": 4000}
+{"text": "Compare renting vs buying a home. List 3 pros of each.", "output_length": 4000}
+{"text": "Correct the grammar and spelling: Their going to the store tommorow to by some apple's and banana.", "output_length": 4000}
+{"text": "Translate to French: Hello, how are you today? I would like a coffee please.", "output_length": 4000}
+{"text": "Give me 5 creative names for a coffee shop.", "output_length": 4000}
+{"text": "Rewrite this more formally: Hey, can u send me the report ASAP? Thx!", "output_length": 4000}
+{"text": "A store sells apples at $1.20 each. If I buy 7 apples and pay with a $10 bill, how much change do I get?", "output_length": 4000}
+{"text": "Recommend a science fiction book for someone who liked Dune, and say why in one sentence.", "output_length": 4000}
+{"text": "Write a Python function called is_palindrome that checks if a string is a palindrome. Include a docstring.", "output_length": 4000}
+{"text": "Write a Python function that returns the n-th Fibonacci number using iteration.", "output_length": 4000}
+{"text": "Fix the bug in this code and explain the fix:\ndef add(a, b):\n    return a - b", "output_length": 4000}
+{"text": "Explain what this code does step by step:\nresult = [x**2 for x in range(10) if x % 2 == 0]", "output_length": 4000}
+{"text": "Write a SQL query to find the top 5 customers by total order amount from a table orders with columns customer_id and amount.", "output_length": 4000}
+{"text": "Write a regular expression that matches a valid email address and explain each part briefly.", "output_length": 4000}
+{"text": "Convert this loop into a Python list comprehension:\nsquares = []\nfor i in range(1, 11):\n    squares.append(i * i)", "output_length": 4000}
+{"text": "Write a simple Python class Rectangle with width and height attributes, and methods to compute area and perimeter.", "output_length": 4000}
+{"text": "Write a Python function that takes a dictionary and returns a new dictionary with keys and values swapped. Handle duplicate values gracefully.", "output_length": 4000}
+{"text": "Write a bash command to find all files modified in the last 24 hours in the current directory and its subdirectories.", "output_length": 4000}
+{"text": "Add error handling to this function so it returns None on invalid input:\ndef divide(a, b):\n    return a / b", "output_length": 4000}
+{"text": "Write a Python function that reads a CSV file and returns a list of dictionaries, one per row. Use only the standard library.", "output_length": 4000}

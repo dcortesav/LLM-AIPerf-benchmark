@@ -1,0 +1,72 @@
+# yaml-language-server: $schema=https://github.com/ai-dynamo/aiperf/blob/main/src/aiperf/config/schema/aiperf-config.schema.json
+#
+# AIPerf benchmark configuration for the Huawei MaaS OpenAI-compatible endpoint.
+#
+# This file defines the shared *workload shape* used for every model variant.
+# Per-model overrides (model id, reasoning/thinking payload, and output dir)
+# are applied by run_benchmarks.sh via CLI flags and env vars:
+#
+#   AIPERF_ENDPOINT_URL  - full chat-completions URL, derived from $MAAS_URL
+#   AIPERF_ARTIFACT_DIR  - timestamped output directory for the current run
+#   AIPERF_MODEL         - model id (also overridable with --model)
+#
+# Objective: gather meaningful, comparable performance metrics across eight
+# model/reasoning configurations using real, verbatim prompts.
+# To that end we use:
+#   * streaming              -> enables TTFT & inter-token-latency metrics
+#   * builtin tokenizer      -> zero-network tiktoken for prompt sizing
+#   * server token counts    -> authoritative usage from the API for metrics
+#   * closed-loop concurrency -> stable latency-under-load + throughput numbers
+#   * 3 warmup + 100 eval requests -> warm caches, then a statistically useful sample
+#   * verbatim prompts        -> ./datasets/prompts.jsonl (everyday + coding tasks)
+#   * per-prompt output_length -> caps output tokens to keep the token budget bounded
+#
+# Run: ./run_benchmarks.sh
+
+schemaVersion: "2.0"
+
+randomSeed: 42
+
+benchmark:
+  # Default model; overridden per-run by --model / $AIPERF_MODEL.
+  model: ${AIPERF_MODEL:glm-5.2}
+
+  endpoint:
+    # Full chat-completions URL (used verbatim). Set from $MAAS_URL by the runner.
+    url: ${AIPERF_ENDPOINT_URL:http://localhost:8000/v1/chat/completions}
+    type: chat
+    streaming: true
+    timeout: 600.0
+
+  dataset:
+    # Verbatim single-turn prompts (no synthetic ISL/OSL generation).
+    # Each JSONL record is {"text": "...", "output_length": N} (extra fields optional).
+    # output_length caps that record's output tokens.
+    type: file
+    format: single_turn
+    path: ./datasets/prompts.jsonl
+    # Sequential sampling: prompts are dispatched in file order, wrapping around
+    # when exhausted. With 25 prompts and 100 requests, every prompt is used
+    # exactly 4 times in the SAME order for every model/variant. Combined with
+    # randomSeed above, this guarantees all benchmark runs are directly
+    # comparable (identical prompt multiset and sequence).
+    sampling: sequential
+
+  # Warmup phase: 3 requests to prime connections / JIT / KV cache.
+  # Warmup results are excluded from the profiling metrics.
+  warmup:
+    type: concurrency
+    requests: 3
+    concurrency: 5
+
+  # Profiling phase: 100 evaluation requests at a sustained concurrency of 5
+  # (closed-loop: a new request fires as soon as one completes).
+  profiling:
+    type: concurrency
+    requests: 100
+    concurrency: 5
+
+  artifacts:
+    dir: ${AIPERF_ARTIFACT_DIR:./results/run}
+    summary: [json]
+    records: [jsonl]
